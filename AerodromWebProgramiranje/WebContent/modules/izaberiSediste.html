@@ -1,0 +1,86 @@
+<form id="rezervisiForm">
+<div class="input-group">
+    <span class="input-group-addon">Ime putnika</span>
+    <input required type="text" name="imePutnika" class="form-control" id="imePutnikaInput" aria-describedby="basic-addon1">
+</div>
+<br>
+<div class="input-group">
+    <span class="input-group-addon">Prezime putnika</span>
+    <input required type="text" name="prezimePutnika" class="form-control" id="prezimePutnikaInput" aria-describedby="basic-addon1">
+</div>
+
+<div class="form-group">
+    <label for="brojSedistaSelect">Izaberi slobodno mesto</label>
+    <select name="sedistePolazniLet" required class="form-control" id="brojSedistaSelect">
+    </select>
+</div>
+<div class="checkbox">
+    <label><input id="povratniLetCheckBox" type="checkbox" value="">Povratni let</label>
+</div>
+
+<br>
+<br>
+<div id="povratni-let-placeholder"></div>
+<br>
+<br>
+<div class="btn-group" role="group">
+    <button type="submit" value="rezervisi" class="btn btn-primary rezervisi-button">Rezervisi</button>
+    <button type="submit" value="kupi" class="btn btn-success rezervisi-button">Rezervisi i kupi kartu</button>
+
+</div>
+</form>
+<button id="closeRezervacije" class="btn btn-danger pull-right">Obustavi registraciju</button>
+
+
+<script>
+    var $povratniLetId;
+    var $povratniLetExist = false;
+
+    $.get("http://localhost:8080/webp/slobodna_mesta?let_id=" + $letId, function (data, status, xhr) {
+        if (status == "success") {
+            $("#brojSedistaSelect").append($('<option>').text("").attr("selected", "selected").attr("disabled", "disabled").attr("hidden", "hidden"));
+            $.each(JSON.parse(data), function (i, broj) {
+                $("#brojSedistaSelect").append($('<option>').text(broj).attr("value", broj));
+            });
+        }
+    });
+
+    $("#povratniLetCheckBox").click(function (e) {
+        if ($(this).is(':checked')) {
+            $("#povratni-let-placeholder").load('modules/povratniLet.html');
+            $povratniLetExist = true;
+        } else {
+            $("#povratni-let-placeholder").empty();
+            $povratniLetExist = false;
+        }
+    });
+    $("#rezervisiForm").submit(function(event){
+        event.preventDefault();
+        var data = $(this).serializeArray();
+        var $action=$(document.activeElement).val();
+        console.log(data); //  <----------- 
+        var obj = {};
+        obj.polazniLetId=$letId;
+        data.forEach(function (element) {
+            obj[element.name] = element.value;
+        });
+        console.log(obj);
+
+        $.ajax({
+            type: 'POST',
+            url: 'http://localhost:8080/webp/rezervacija?action='+$action,
+            dataType: 'json',
+            data: JSON.stringify(obj),
+            headers: {
+                "Content-Type": "application/json"
+            },success:function(success){
+                console.log("Jeeeej");
+            }
+        })
+    })
+
+    $("#closeRezervacije").click(function(){
+        $("#broj-sedista-placeholder").empty();
+    })
+
+</script>

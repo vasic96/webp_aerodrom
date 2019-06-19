@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Rezervacije</title>
+    <!-- Latest compiled and minified CSS -->
+    <script src="script/moment.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <script src="script/rezervacije.js"></script>
+    <script src="script/jquery.validate.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs/dt-1.10.18/datatables.min.css" />
+
+    <script type="text/javascript" src="https://cdn.datatables.net/v/bs/dt-1.10.18/datatables.min.js"></script>
+
+    <style>
+        input:invalid {
+            border: 2px solid red;
+        }
+
+        select:invalid {
+            border: 2px solid red;
+        }
+    </style>
+</head>
+
+
+<body>
+    <div id="nav-placeholder"></div>
+    <div class="container">
+            <h3 style="color:blue">Rezervacije</h3>
+            <table class="table" id="rezervacije_table">
+                <thead>
+                    <tr>
+                        <th scope="col">Datum rezervacije</th>
+                        <th scope="col">Polazni aerodrom</th>
+                        <th scope="col">Sediste na polaznom letu</th>
+                        <th scope="col">Povratni aerodrom</th>
+                        <th scope="col">Sediste na povratnom letu</th>
+                        <th scope="col">Korisnik</th>
+                        <th scope="col">Ukupna cena</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+
+            <br>
+    </div>
+</body>
+
+</html>

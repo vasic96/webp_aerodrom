@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Aerodrom</title>
+    <script src="script/moment.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <script src="script/rezervacija.js"></script>
+    <script src="script/jquery.validate.js"></script>
+</head>
+
+
+<body>
+    <div id="nav-placeholder"></div>
+    <div class="container">
+        <div class="rezervacija-info-div">
+            <div class="input-group">
+                <span class="input-group-addon">Datum rezervacije:</span>
+                <input readonly type="text" class="form-control" id="datumRezervacijeView"
+                    aria-describedby="basic-addon1">
+
+            </div>
+            <br>
+            <div class="input-group">
+                <span class="input-group-addon">Datum prodaje karte</span>
+                <input readonly type="text" class="form-control" id="datumProdajeKarteView"
+                    aria-describedby="basic-addon1">
+            </div>
+            <br>
+            <div class="input-group">
+                <span class="input-group-addon">Polazni let aerodrom</span>
+                <input readonly type="text" class="form-control" id="polazniLetView" aria-describedby="basic-addon1">
+
+                <span class="input-group-btn">
+                    <button id="posetiPolazniBtn" class="btn btn-primary" type="button">
+
+                        Poseti stranicu</button></span>
+            </div>
+            <br>
+            <div class="input-group">
+                <span class="input-group-addon">Polazni let sediste</span>
+                <input readonly type="text" class="form-control" id="polazniLetSedisteView"
+                    aria-describedby="basic-addon1">
+                <span class="input-group-btn">
+                    <button class="btn btn-primary rezervacija-only" id="sedistePolazniLetButton" type="button">
+                        Promeni</button></span>
+
+            </div>
+            <br>
+            <div class="input-group">
+                <span class="input-group-addon">Povratni let aerodrom</span>
+                <input readonly type="text" class="form-control" id="povratniLetView" aria-describedby="basic-addon1">
+                <span class="input-group-btn">
+                    <button id="povratniLetButton" class="btn btn-primary" type="button">
+                        Poseti stranicu</button></span>
+            </div>
+            <br>
+            <div class="input-group">
+                <span class="input-group-addon">Povratni let sediste</span>
+                <input readonly type="text" class="form-control" id="povratniLetSedisteView"
+                    aria-describedby="basic-addon1">
+                <span class="input-group-btn">
+                    <button id="povratniLetSedisteButton" class="btn btn-primary rezervacija-only" type="button">
+                        Promeni</button></span>
+            </div>
+            <br>
+            <div class="input-group">
+                <span class="input-group-addon">Korisnik</span>
+                <input readonly type="text" class="form-control" id="korisnikView" aria-describedby="basic-addon1">
+
+                <span class="input-group-btn">
+                    <button id="posetiKorisnikaBtn" class="btn btn-primary" type="button">
+                        Poseti stranicu</button></span>
+            </div>
+            <br>
+            <div class="input-group">
+                <span class="input-group-addon">Ime putnika</span>
+                <input readonly type="text" class="form-control" id="imeView" aria-describedby="basic-addon1">
+
+                <span class="input-group-btn">
+                    <button class="btn btn-primary rezervacija-only" type="button" data-toggle="modal"
+                        data-target="#imePrezimeModal">
+                        Promeni</button></span>
+            </div>
+            <br>
+            <div class="input-group">
+                <span class="input-group-addon">Prezime putnika</span>
+                <input readonly type="text" class="form-control" id="prezimeView" aria-describedby="basic-addon1">
+
+                <span class="input-group-btn">
+                    <button class="btn btn-primary rezervacija-only" type="button" type="button" data-toggle="modal"
+                        data-target="#imePrezimeModal">
+                        Promeni</button></span>
+            </div>
+            <br>
+            <div class="input-group">
+                <span class="input-group-addon">Ukupna cena</span>
+                <input readonly type="text" class="form-control" id="ukupnaCenaView" aria-describedby="basic-addon1">
+            </div>
+            <br>
+            <button id="kupiKartuBtn" disabled class="btn btn-primary rezervacija-only">Kupi kartu</button>
+            <br>
+            <br>
+            <button id="izbrisiRezervacijuBtn" disabled class="btn btn-primary rezervacija-only">Izbrisi
+                rezervaciju</button>
+            <!-- <button id="promeniSediste" disabled class="btn btn-primary">Kupi kartu</button> -->
+            <br>
+        </div>
+
+    </div>
+
+    <div id="imePrezimeModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Promena detalja rezervacije</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="imePrezimeForm">
+                        <div class="form-group">
+                            <label for="korisnickoImeInputRegister">Novo ime putnika</label>
+                            <input name="novoIme" required type="text" class="form-control" id="novoIme">
+                        </div>
+                        <div class="form-group">
+                            <label for="passwordInputRegister">Novo prezime putnika</label>
+                            <input name="novoPrezime" required type="text" class="form-control" id="novoPrezime">
+                        </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-success">Submit</button>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <div id="sedistaModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Promena detalja rezervacije</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="sedisteForm">
+                        <div class="form-group">
+                            <label for="brojSedistaSelect">Mesto na polaznom letu</label>
+                            <select name="sedistePolazniLet" required class="form-control" id="sedistePolazniLet">
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="brojSedistaSelect">Mesto na povratnom letu</label>
+                            <select disabled name="sedistePovratniLet" required class="form-control" id="sedistePovratniLet">
+                            </select>
+                        </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-success">Submit</button>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,182 @@
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid" id="nav-bar-container">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/webp/index.html">AerodromWP</a>
+    </div>
+    <ul id="nav-bar-links-list" class="nav navbar-nav">
+      <li class="loggedInOnly"><a href="/webp/index.html">Letovi</a></li>
+      <li class="loggedInOnly"><a href="/webp/rezervacije.html">Rezervacije</a></li>
+      <li class="loggedInOnly" id="switchToUsers"><a href="/webp/users.html">Korisnici</a></li>
+      <li class="loggedInOnly" id="switchToIzvestaj"><a href="/webp/izvestaj.html">izvestaj</a></li>
+    </ul>
+    <button id="loginButton" data-toggle="modal" data-target="#loginModal"
+      class="btn btn-success pull-right btn1">Prijava</button>
+
+    &nbsp;&nbsp;
+    <button id="registerButton" data-toggle="modal" data-target="#registerModal"
+      class="btn btn-success pull-right btn1">registracija</button>
+    <button id="logoutButton" class="btn btn-danger btn1 pull-right">Odjava</button>
+    <button id="my-profile-button" class="btn btn-primary pull-right btn1"><a href="/webp/my-profile.html"></a></button>
+  </div>
+</nav>
+
+<style>
+  .btn1 {
+
+    margin-left: 10px !important;
+    margin-right: 10px !important;
+
+  }
+
+  #my-profile-button a {
+    color: white;
+  }
+</style>
+
+
+<div id="loginModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Prijava na sistem</h4>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="korisnickoImeInput">Korisnicko ime</label>
+          <input name="korisnickoIme" required type="type" class="form-control" id="korisnickoImeInput">
+        </div>
+        <div class="form-group">
+          <label for="passwordInput">Lozinka</label>
+          <input name="lozinka" required type="password" minlength="3" class="form-control" id="passwordInput">
+        </div>
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button id="submitButton" type="submit" class="btn btn-success">Submit</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div id="registerModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Registracija</h4>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="korisnickoImeInputRegister">Korisnicko ime</label>
+          <input name="korisnickoIme" required type="type" class="form-control" id="korisnickoImeInputRegister">
+        </div>
+        <div class="form-group">
+          <label for="passwordInputRegister">Lozinka</label>
+          <input name="lozinka" required type="password" minlength="3" class="form-control" id="passwordInputRegister">
+        </div>
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button id="submitButtonRegister" type="submit" class="btn btn-success">Submit</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+
+  $("#nav-bar-links-list li").click(function () {
+    $("#nav-bar-links-list li").removeClass("active");
+    $(this).addClass("active");
+
+  });
+
+  setButtons();
+
+  function setButtons() {
+    $loggedUser = JSON.parse(localStorage.getItem("user"));
+    if ($loggedUser != null) {
+      var user = JSON.parse(localStorage.getItem("user"));
+      console.log(user.korisnickoIme);
+      $("#loginButton").hide();
+      $("#logoutButton").show();
+      $("#registerButton").hide();
+      $("#my-profile-button a").text(user.korisnickoIme);
+      $("#my-profile-button").show();
+      if (!$loggedUser.admin) {
+        $(".loggedInOnly").hide();
+      }
+    } else {
+      $("#loginButton").show();
+      $("#logoutButton").hide();
+      $("#registerButton").show();
+      $("#my-profile-button").hide();
+      $(".loggedInOnly").hide();
+
+    }
+  }
+
+
+
+
+  $("#logoutButton").click(function () {
+    localStorage.clear();
+    location.href = '/webp/';
+  });
+
+  $("#submitButtonRegister").click(function () {
+    $username = $("#korisnickoImeInputRegister").val();
+    $password = $("#passwordInputRegister").val();
+    console.log($username);
+    var obj = {
+      username: $username,
+      password: $password
+    }
+
+    $.post("http://localhost:8080/webp/register", JSON.stringify(obj), function (data, status, xhr) {
+      console.log(xhr)
+      if (xhr.status == "200") {
+        $("#registerModal").modal("hide");
+        alert("Registration successful")
+      } else if (xhr.status == "404") {
+        alert("Username exist")
+      }
+
+
+    }), "json"
+  });
+
+  $("#submitButton").click(function () {
+    $username = $("#korisnickoImeInput").val();
+    $password = $("#passwordInput").val();
+    console.log($username);
+    var obj = {
+      username: $username,
+      password: $password
+    }
+
+    $.post("http://localhost:8080/webp/login", JSON.stringify(obj), function (data, status, xhr) {
+      if (xhr.status == "200") {
+        localStorage.setItem("user", data);
+        $("#loginModal").modal("hide");
+        location.reload();
+      } else {
+        console.log("Something is wrong with login..")
+      }
+
+
+    }), "json"
+  });
+
+</script>

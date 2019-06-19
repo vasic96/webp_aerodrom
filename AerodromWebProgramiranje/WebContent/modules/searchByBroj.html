@@ -1,0 +1,26 @@
+<div class="input-group">
+    <span class="input-group-addon" >Broj leta</span>
+    <input type="text" class="form-control" id="searchByBrojInput" placeholder="Broj leta" aria-describedby="basic-addon1">
+</div>
+<br>
+<button id="searchBtn" class="btn btn-outline btn-success">Trazi</button>
+
+<script>
+
+$("#searchBtn").click(function(){
+
+
+    var $broj = $("#searchByBrojInput").val();
+
+    $.get("http://localhost:8080/webp/LetServlet?broj="+$broj, function (data, status, xhr) {
+        console.log("Data: " + data + "\nStatus: " + status + "\nStatus code: " + xhr.status);
+        if (xhr.status == "200") {
+            prikazTabeleLetova(data);
+        } else {
+            alert("Problem sa serverom " + xhr.status);
+        }
+    })
+
+});
+
+</script>

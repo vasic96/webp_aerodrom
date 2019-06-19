@@ -1,0 +1,45 @@
+<div class="form-group">
+    <label for="dolazniAerodromSelect">Tip</label>
+    <select name="dolazniAerodromId" required class="form-control" id="dolazniAerodromSelect">
+        <option value="polazni">Polazni</option>
+        <option value="dolazni">Dolazni</option>
+    </select>
+</div>
+<div class="form-group">
+    <label for="dolazniAerodromSelect">Tip</label>
+    <select name="aerodromPretragaSelect" required class="form-control" id="aerodromPretragaSelect">
+    </select>
+</div>
+<br>
+<button id="traziBtn" class="btn btn-success">trazi</button>
+
+<script>
+
+
+    $.get("http://localhost:8080/webp/aerodromi", function (data, status, xhr) {
+        console.log("Kitaaa Data: " + data + "\nStatus: " + status + "\nStatus code: " + xhr.status);
+        if (xhr.status == "200") {
+            $.each(JSON.parse(data),function(i,value){
+                console.log(value);
+                $("#aerodromPretragaSelect").append($("<option>").text(value.naziv).attr('value', value.id));
+            });
+        } else {
+            alert("Problem sa serverom " + xhr.status);
+        }
+    })
+
+
+    $("#traziBtn").click(function(){
+        console.log("button clicked")
+        $aerodromId = $("#aerodromPretragaSelect").val();
+        $tip = $("#dolazniAerodromSelect").val();
+        $.get("http://localhost:8080/webp/LetServlet?tip="+$tip+"&aerodromId="+$aerodromId,function(data,status,xhr){
+            if (xhr.status == "200") {
+                prikazTabeleLetova(data);
+            } else {
+                alert("Problem sa serverom " + xhr.status);
+            }
+        });
+    });
+
+</script>

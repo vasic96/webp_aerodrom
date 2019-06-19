@@ -1,0 +1,65 @@
+package vasic.web.programiranje.servlets;
+
+import java.io.IOException;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import vasic.web.programiranje.dao.RezervacijaDAO;
+import vasic.web.programiranje.dto.RezervacijaDTO;
+import vasic.web.programiranje.model.Korisnik;
+import vasic.web.programiranje.model.Rezervacija;
+import vasic.web.programiranje.tools.GsonProvider;
+
+/**
+ * Servlet implementation class RezervacijaByIdServlet
+ */
+@WebServlet("/rezervacija_id")
+public class RezervacijaByIdServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public RezervacijaByIdServlet() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession();
+		Korisnik ulogovanKorisnik = (Korisnik) session.getAttribute("ulogovanKorisnik");
+//		if(ulogovanKorisnik==null) {
+//			response.sendError(401);
+//			return;
+//		}
+		int id = Integer.parseInt(request.getParameter("id"));
+		Rezervacija rezervacija = RezervacijaDAO.getById(id);
+		if(rezervacija==null) {
+			response.sendError(404);
+			return;
+		}
+		if(!ulogovanKorisnik.isAdmin() && !rezervacija.getKorisnik().getKorisnickoIme().equals(ulogovanKorisnik.getKorisnickoIme())) {
+			response.sendError(403);
+			return;
+		}
+		response.getWriter().write(GsonProvider.getInstance().toJson(new RezervacijaDTO(rezervacija)));
+	
+	
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		doGet(request, response);
+	}
+
+}

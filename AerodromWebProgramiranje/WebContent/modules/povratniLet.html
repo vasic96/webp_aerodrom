@@ -1,0 +1,43 @@
+<div class="form-group">
+    <label for="povratniLetAerodrom">Izaberi povratni let</label>
+    <select name="povratniLetId" required class="form-control" id="povratniLetAerodrom">
+    </select>
+</div>
+
+
+<div class="form-group">
+    <label for="povratniLetSediste">Izaberi sediste na povratnom letu</label>
+    <select name="sedistePovratniLet" required class="form-control" id="povratniLetSediste">
+    </select>
+</div>
+
+
+<script>
+
+    $.get("http://localhost:8080/webp/povratni_let?let_id=" + $letId, function (data, status, xhr) {
+        if (status == "success") {
+            $("#povratniLetAerodrom").append($('<option>').text("").attr("selected", "selected").attr("disabled", "disabled").attr("hidden", "hidden"));
+            $.each(JSON.parse(data), function (i, let) {
+                $("#povratniLetAerodrom").append($('<option>').text(let.polazniAerodromNaziv + " : " + let.dolazniAerodromNaziv + " : " + let.vremePolaska).attr("value", let.id));
+            });
+        }
+    });
+
+    $("#povratniLetAerodrom").change(function () {
+        populateSedistaSelect($(this).val());
+        $povratniLetId = $(this).val();
+    })
+
+    function populateSedistaSelect($povratniLetId) {
+        $.get("http://localhost:8080/webp/slobodna_mesta?let_id=" + $povratniLetId, function (data, status, xhr) {
+            if (status == "success") {
+                $("#povratniLetSediste").empty();
+                $("#povratniLetSediste").append($('<option>').text("").attr("selected", "selected").attr("disabled", "disabled").attr("hidden", "hidden"));
+                $.each(JSON.parse(data), function (i, broj) {
+                    $("#povratniLetSediste").append($('<option>').text(broj).attr("value", broj));
+                });
+            }
+        });
+    }
+
+</script>

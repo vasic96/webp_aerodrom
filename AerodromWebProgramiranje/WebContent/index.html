@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Aerodrom</title>
+  <!-- Latest compiled and minified CSS -->
+  <script src="script/moment.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+
+  <!-- jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+  <!-- Latest compiled JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  <script src="script/index.js"></script>
+  <script src="script/jquery.validate.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs/dt-1.10.18/datatables.min.css" />
+
+  <script type="text/javascript" src="https://cdn.datatables.net/v/bs/dt-1.10.18/datatables.min.js"></script>
+
+  <style>
+    input:invalid {
+      border: 2px solid red;
+    }
+
+    select:invalid {
+      border: 2px solid red;
+    }
+  </style>
+
+</head>
+
+<body>
+
+
+  <div id="nav-placeholder">
+
+  </div>
+
+
+  <div class="container" id="container">
+    <table class="table" id="let_table">
+      <thead>
+        <tr>
+          <th scope="col">Broj leta</th>
+          <th scope="col">Polazni aerodrom</th>
+          <th scope="col">Dolazni aerodrom</th>
+          <th scope="col">Vreme Polaska</th>
+          <th scope="col">Vreme dolaska</th>
+          <th scope="col">Cena krate</th>
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+
+    <br>
+
+    <div class="dropdown">
+      <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Pretraga
+        <span class="caret"></span></button>
+      <ul class="dropdown-menu">
+        <li id="serchByBroj"><a href="#">Broj</a></li>
+        <li id="searchByAerodrom"><a href="#">Aerodrom</a></li>
+        <li id="searchByDatum"><a href="#">Opseg datum/vreme</a></li>
+        <li id="searchByCena"><a href="#">Opseg cena</a></li>
+        <li id="getAll"><a href="#">Prikazi sve</a></li>
+      </ul>
+    </div>
+    <br>
+
+    <div id="search-placeholder">
+
+    </div>
+
+    <div id="rezervacijaLetaModal" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Rezervacija leta</h4>
+          </div>
+          <div class="modal-body">
+            <form id="rezervacijaForm">
+              <div class="form-group">
+                <label for="polazniAerodromRezervacijaSelect">Ime putnika</label>
+                <input name="imePutnika" required type="text" class="form-control" id="imePutnikaInput">
+              </div>
+              <div class="form-group">
+                <label for="polazniAerodromRezervacijaSelect">Prezime putnika</label>
+                <input name="prezimePutnika" required type="text" class="form-control" id="prezimePutnikaInput">
+              </div>
+              <div class="form-group">
+                <label for="polazniAerodromRezervacijaSelect">Polazni aerodrom</label>
+                <select name="polazniLetId" required class="form-control" id="polazniAerodromRezervacijaSelect">
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="polazniSedisteSelect">Sediste na polaznom aerodromu</label>
+                <select name="sedistePolazniLet" required class="form-control" id="polazniSedisteSelect">
+                </select>
+              </div>
+              <div class="checkbox">
+                <label><input disabled id="povratniLetCheckBox" type="checkbox" value="">Povratni let</label>
+              </div>
+              <div hidden id="povratniLetDiv">
+                <div class="form-group">
+                  <label for="povratniAerodromSelect">Povratni let</label>
+                  <select name="povratniLetId" class="form-control" id="povratniAerodromSelect">
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="sedistePovratniSelect">Sediste na povratnom letu</label>
+                  <select name="sedistePovratniLet" class="form-control" id="sedistePovratniSelect">
+                  </select>
+                </div>
+              </div>
+              <div class="input-group">
+                <span class="input-group-addon">Ukupna cena</span>
+                <input disabled type="text" class="form-control" id="ukupnaCenaInput" aria-describedby="basic-addon1">
+            </div>
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" id="closeRezervacijaModal" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="submit" value="rezervisi" class="btn btn-success pull-left">Rezervisi</button>
+            <button type="submit" value="kupi" class="btn btn-primary pull-left">Kupi</button>
+
+            </form>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div id="noviLetModal" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Dodavanje novog leta</h4>
+          </div>
+          <div class="modal-body">
+            <form id="noviLetForm">
+              <div class="form-group">
+                <label for="vremePolaska">Vreme polaska</label>
+                <div class='input-group date' id='vremePolaska'>
+                  <input name="vremePolaska" required type='datetime-local' class="form-control date-input" />
+                  <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                  </span>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="vremeDolaska">Vreme dolaska</label>
+                <div class='input-group date' id='vremeDolaska'>
+                  <input name="vremeDolaska" required type='datetime-local' class="form-control date-input" />
+                  <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                  </span>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="polazniAerodromSelect">Polazni aerodrom</label>
+                <select name="polazniAerodromId" required class="form-control select_aerodrom"
+                  id="polazniAerodromSelect">
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="dolazniAerodromSelect">Dolazni aerodrom</label>
+                <select name="dolazniAerodromId" required class="form-control" id="dolazniAerodromSelect">
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="brojSedistaInput">Broj sedista</label>
+                <input name="brojSedista" required type="number" class="form-control" id="brojSedistaInput">
+              </div>
+              <div class="form-group">
+                <label for="cenaInput">Cena</label>
+                <input name="cena" required type="number" class="form-control" id="cenaInput">
+              </div>
+
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-success">Submit</button>
+            </form>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <br>
+
+    <button id="noviLetButton" type="button" class="btn btn-info" data-toggle="modal" data-target="#noviLetModal">Novi
+      let</button>
+    <button id="rezervacijeLetaButton" type="button" class="btn btn-primary pull-right" data-toggle="modal"
+      data-target="#rezervacijaLetaModal">Rezervacija leta</button>
+
+
+  </div>
+
+</body>
+
+</html>

@@ -1,0 +1,36 @@
+<div class="form-group">
+    <label for="cenaOdInput">Od</label>
+    <input name="cenaOdInput" required type="number" class="form-control" id="cenaOdInput">
+</div>
+
+<div class="form-group">
+    <label for="cenaDoInput">Do</label>
+    <input name="cenaDoInput" required type="number" class="form-control" id="cenaDoInput">
+</div>
+
+<br>
+
+<button id="searchByCenaButton" class="btn btn-success">Trazi</button>
+
+<script>
+
+    $("#searchByCenaButton").click(function () {
+
+        var $cenaOd = $("#cenaOdInput").val();
+        var $cenaDo = $("#cenaDoInput").val();
+
+
+        $.get("http://localhost:8080/webp/LetServlet?cenaOd=" + $cenaOd + "&cenaDo=" + $cenaDo, function (data, status, xhr) {
+            console.log("Data: " + data + "\nStatus: " + status + "\nStatus code: " + xhr.status);
+            if (xhr.status == "200") {
+                prikazTabeleLetova(data);
+            } else {
+                alert("Problem sa serverom " + xhr.status);
+            }
+        })
+
+
+    });
+
+
+</script>

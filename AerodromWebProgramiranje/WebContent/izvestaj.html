@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Izvestaj</title>
+    <script src="script/moment.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <script src="script/izvestaj.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs/dt-1.10.18/datatables.min.css" />
+
+    <script type="text/javascript" src="https://cdn.datatables.net/v/bs/dt-1.10.18/datatables.min.js"></script>
+
+    <script src="script/jquery.sortElements.js"></script>
+
+
+    <style>
+        input:invalid {
+            border: 2px solid red;
+        }
+
+        select:invalid {
+            border: 2px solid red;
+        }
+    </style>
+</head>
+
+
+<body>
+    <div id="nav-placeholder"></div>
+
+    <div class="container">
+
+
+        <form id="izvestajForm">
+
+            <div class="form-group">
+                <label for="pretragaVremeOdInput">Od</label>
+                <div class='input-group date'>
+                    <input name="datum_od" id='datum_od' required type='datetime-local' class="form-control" />
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="pretragaVremeDoInput">Do</label>
+                <div class='input-group date'>
+                    <input name="datum_do" id='datum_do' required type='datetime-local' class="form-control" />
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Dobavi izvestaj</button>
+        </form>
+
+
+        <div id="resoult-placeholder">
+
+            <h3 style="color:blue"></h3>
+            <table class="table" id="izvestaj_table">
+                <thead>
+                    <tr>
+                        <th class="sortable-th" scope="col">Naziv aerodroma</th>
+                        <th class="sortable-th" scope="col">Broj letova</th>
+                        <th class="sortable-th" scope="col">Ukupno prodatih karata</th>
+                        <th class="sortable-th" scope="col">Ukupna cena prodatih karata</th>>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+                <tfoot>
+
+                </tfoot>
+            </table>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,54 @@
+<div class="form-group">
+  <label for="pretragaDatumTipSelect">Tip</label>
+  <select name="polazniAerodromId" required class="form-control" id="pretragaDatumTipSelect">
+    <option value="polazak">Polazak</option>
+    <option value="dolazak">Dolazak</option>
+  </select>
+</div>
+<div class="form-group">
+  <label for="pretragaVremeOdInput">Od</label>
+  <div class='input-group date'>
+    <input name="pretragaVremeOdInput" id='pretragaVremeOdInput' required type='datetime-local' class="form-control" />
+    <span class="input-group-addon">
+      <span class="glyphicon glyphicon-calendar"></span>
+    </span>
+  </div>
+</div>
+<div class="form-group">
+  <label for="pretragaVremeDoInput">Do</label>
+  <div class='input-group date'>
+    <input name="pretragaVremeDoInput" id='pretragaVremeDoInput' required type='datetime-local' class="form-control" />
+    <span class="input-group-addon">
+      <span class="glyphicon glyphicon-calendar"></span>
+    </span>
+  </div>
+</div>
+<br>
+<button id="btnTrazi" class="btn btn-success">Pretrazi</button>
+
+
+<script>
+
+$("#btnTrazi").click(function(){
+
+  var $datumOd = $("#pretragaVremeOdInput").val();
+  var $datumDo = $("#pretragaVremeDoInput").val();
+  var $tip = $("#pretragaDatumTipSelect").val();
+
+  $.ajax({
+      url:'http://localhost:8080/webp/LetServlet',
+      type:'GET',
+      data : {
+        tip:$tip,
+        datum_od:$datumOd,
+        datum_do:$datumDo
+      },
+      success:function(data){
+        prikazTabeleLetova(data)
+      }
+  });
+
+});
+
+
+</script>

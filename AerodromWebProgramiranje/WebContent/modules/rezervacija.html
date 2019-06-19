@@ -1,0 +1,61 @@
+<div id="rezervacijaLetaModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Rezervacija leta</h4>
+        </div>
+        <div class="modal-body">
+          <form id="rezervacijaForm">
+            <div class="form-group">
+              <label for="polazniAerodromRezervacijaSelect">Ime putnika</label>
+              <input name="imePutnika" required type="text" class="form-control" id="imePutnikaInput">
+            </div>
+            <div class="form-group">
+              <label for="polazniAerodromRezervacijaSelect">Prezime putnika</label>
+              <input name="prezimePutnika" required type="text" class="form-control" id="prezimePutnikaInput">
+            </div>
+            <div class="form-group">
+              <label for="polazniAerodromRezervacijaSelect">Polazni aerodrom</label>
+              <select name="polazniLetId" required class="form-control" id="polazniAerodromRezervacijaSelect">
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="polazniSedisteSelect">Sediste na polaznom aerodromu</label>
+              <select name="sedistePolazniLet" required class="form-control" id="polazniSedisteSelect">
+              </select>
+            </div>
+            <div class="checkbox">
+              <label><input disabled id="povratniLetCheckBox" type="checkbox" value="">Povratni let</label>
+            </div>
+            <div hidden id="povratniLetDiv">
+              <div class="form-group">
+                <label for="povratniAerodromSelect">Povratni let</label>
+                <select name="povratniLetId" class="form-control" id="povratniAerodromSelect">
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="sedistePovratniSelect">Sediste na povratnom letu</label>
+                <select name="sedistePovratniLet" class="form-control" id="sedistePovratniSelect">
+                </select>
+              </div>
+            </div>
+            <div class="input-group">
+              <span class="input-group-addon">Ukupna cena</span>
+              <input disabled type="text" class="form-control" id="ukupnaCenaInput" aria-describedby="basic-addon1">
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" id="closeRezervacijaModal" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="submit" value="rezervisi" class="btn btn-success pull-left">Rezervisi</button>
+          <button type="submit" value="kupi" class="btn btn-primary pull-left">Kupi</button>
+
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </div>
